@@ -3,14 +3,12 @@ import requests
 import numpy as np
 import os
 
-# Set page config
 st.set_page_config(
     page_title="Salary Predictor",
     page_icon="💰",
     layout="centered"
 )
 
-# Custom CSS for better styling
 st.markdown("""
     <style>
     .main {
@@ -36,14 +34,10 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# App title and description
 st.title("💰 Salary Prediction")
 st.markdown("Enter years of experience to predict the expected salary.")
-
-# API Configuration
 API_URL = os.getenv('API_URL', 'http://localhost:5000') + '/predict'
 
-# Input form
 with st.form("prediction_form"):
     col1, col2 = st.columns(2)
     with col1:
@@ -59,10 +53,8 @@ with st.form("prediction_form"):
         st.markdown("<br>", unsafe_allow_html=True)
         submit_button = st.form_submit_button("Predict Salary")
 
-# Handle form submission
 if submit_button:
     try:
-        # Make API request
         response = requests.post(
             API_URL,
             json={"years_experience": [years_exp]},
@@ -72,7 +64,7 @@ if submit_button:
         if response.status_code == 200:
             result = response.json()
             predicted_salary = result['predicted_salaries'][0]
-            st.balloons()
+            #st.balloons()
             st.markdown(
                 f"<div class='prediction'>"
                 f"Predicted Salary: ${predicted_salary:,.2f}"
